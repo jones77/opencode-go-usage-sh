@@ -57,22 +57,16 @@ The default vertical bar fills bottom-to-top with 8 steps per cell:  ␣▁▂�
 The -z, horizontal bar fills left-to-right with 8 steps per cell:    ␣▏▎▍▌▋▊▉█
 
   Width  One step   One cell  67% -v/--vertical  67% -z/--horizontal
-$(for ww in 13 12 11 10 9 8 7 6 5 4 3 2 1
+$(for ww in 13 11 9 7 5 3 1
   do
       case "$ww" in
-          13) step="0.9615"; cell="7.6923" ;;
-          12) step="1.0417"; cell="8.3333" ;;
-          11) step="1.1364"; cell="9.0909" ;;
-          10) step="1.25";   cell="10" ;;
+          13) step="0.9615"; cell="7.6923"  ;;
+          11) step="1.1364"; cell="9.0909"  ;;
           9)  step="1.3889"; cell="11.1111" ;;
-          8)  step="1.5625"; cell="12.5" ;;
           7)  step="1.7857"; cell="14.2857" ;;
-          6)  step="2.0833"; cell="16.6667" ;;
-          5)  step="2.5";    cell="20" ;;
-          4)  step="3.125";  cell="25" ;;
+          5)  step="2.5"   ; cell="20"      ;;
           3)  step="4.1667"; cell="33.3333" ;;
-          2)  step="6.25";   cell="50" ;;
-          1)  step="12.5";   cell="100" ;;
+          1)  step="12.5"  ; cell="100"     ;;
       esac
       vbar="$(bar 67 "$ww" vertical)"
       hbar="$(bar 67 "$ww" horizontal)"
