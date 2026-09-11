@@ -228,14 +228,14 @@ done
 
 # format_duration: pure formatting logic, including boundaries.
 assert_eq "0s"               "$(format_duration 0 0 0 0)" "format_duration all zero"
-assert_eq " 1s"              "$(format_duration 0 0 0 1)" "format_duration seconds only"
-assert_eq " 1m"              "$(format_duration 0 0 1 0)" "format_duration minutes only"
-assert_eq " 1h"              "$(format_duration 0 1 0 0)" "format_duration hours only"
-assert_eq " 1d"              "$(format_duration 1 0 0 0)" "format_duration days only"
+assert_eq "             1s"   "$(format_duration 0 0 0 1)" "format_duration seconds only"
+assert_eq "         1m    "  "$(format_duration 0 0 1 0)" "format_duration minutes only"
+assert_eq "     1h        "  "$(format_duration 0 1 0 0)" "format_duration hours only"
+assert_eq " 1d            "  "$(format_duration 1 0 0 0)" "format_duration days only"
 assert_eq " 1d  2h  3m  4s"   "$(format_duration 1 2 3 4)" "format_duration 1d2h3m4s"
-assert_eq " 5d"              "$(format_duration 5 0 0 0)" "format_duration days only nonzero"
+assert_eq " 5d            "  "$(format_duration 5 0 0 0)" "format_duration days only nonzero"
 assert_eq "100d 23h 59m 59s" "$(format_duration 100 23 59 59)" "format_duration large values"
-assert_eq " 2h 30m"          "$(format_duration 0 2 30 0)" "format_duration skip zero units"
+assert_eq "     2h 30m    "  "$(format_duration 0 2 30 0)" "format_duration zero columns stay blank"
 
 # duration_from_iso8601: past dates clamp to 0 instead of failing (real clock).
 assert_eq "0 0 0 0" \
@@ -266,7 +266,7 @@ assert_eq "0s"      "$(human_readable_short anything)"   "human_readable_short z
 
 _stub_secs=60  # 1m
 assert_eq "0 0 1 0" "$(duration_from_iso8601 anything)" "duration_from_iso8601 1m"
-assert_eq " 1m"      "$(human_readable anything)"        "human_readable 1m"
+assert_eq "         1m    "  "$(human_readable anything)"  "human_readable 1m"
 assert_eq "1m"       "$(human_readable_short anything)"  "human_readable_short single part"
 
 _stub_secs=3661  # 1h 1m 1s

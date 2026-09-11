@@ -122,17 +122,30 @@ mtime_seconds() {
 readonly -A period_color=([rolling]=27 [weekly]=28 [monthly]=166)
 
 format_duration() {
+    # Render d/h/m/s as fixed-width columns so they line up across periods.
+    # A zero value leaves its column blank; every segment is the same width,
+    # so each line is the same total width.
     declare -A args=([d]=$1 [h]=$2 [m]=$3 [s]=$4)
-    local string=
+    local string="" segment value total=0
     for unit in d h m s
     do
-        local value=${args[$unit]}
-        (( value == 0 )) && continue
-        [[ -n "$string" ]] && string="$string "
-        printf -v string "$string%2s$unit" "$value"
+        value=${args[$unit]}
+        (( total += value ))
+        if (( value == 0 ))
+        then
+            segment="    "
+        else
+            printf -v segment '%2s%s ' "$value" "$unit"
+        fi
+        string+="$segment"
     done
 
-    echo "${string:-0s}"
+    if (( total == 0 ))
+    then
+        echo "0s"
+    else
+        echo "${string% }"
+    fi
 }
 
 # Portable ISO-8601 -> seconds-until-target.  Uses python3 so we don't
